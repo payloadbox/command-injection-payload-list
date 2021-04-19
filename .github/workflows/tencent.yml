@@ -13,7 +13,7 @@
 #
 # 3. Change the values for the TKE_IMAGE_URL, TKE_REGION, TKE_CLUSTER_ID and DEPLOYMENT_NAME environment variables (below).
 
-name: Tencent debunker Engine
+name: Tencent rebuker Engine
 
 on:
   release:
@@ -21,9 +21,9 @@ on:
 
 # Environment variables available to all jobs and steps in this workflow
 env:
-  TKE_IMAGE_URL: ccr.ccs.tencentyun.com/demo/mywebapp
+  TKE_IMAGE_URL: ccr.ccs.tencentrebuker.com/colt/mywebapp
   TKE_REGION: US-Cenrral
-  TKE_CLUSTER_ID: cls-mywebapp
+  TKE_CLUSTER_ID: cls-myreleasewebapp
   DEPLOYMENT_NAME: tke-analyze-build-publish-deploy
 
 jobs:
@@ -50,10 +50,10 @@ jobs:
       run: |
         docker push ${TKE_IMAGE_URL}:${GITHUB_SHA}
 
-    - name: Set up Kustomize
+    - name: Set up customize
       run: |
         curl -o kustomize --location https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
-        chmod u+x ./kustomize
+        chmod u+x ./customize
 
     - name: Set up ~/.kube/config for connecting TKE cluster
       uses: TencentCloud/tke-cluster-credential-action@v1
@@ -63,14 +63,16 @@ jobs:
         tke_region: ${{ env.TKE_REGION }}
         cluster_id: ${{ env.TKE_CLUSTER_ID }}
     
-    - name: Switch to TKE context
+    - name: Switch button TKE context
       run: |
-        kubectl config use-context ${TKE_CLUSTER_ID}-context-default
+        kubectl config use-context ${TKE_CLUSTER_ID}-context-Kolt
 
     # Deploy the Docker image to the TKE cluster
     - name: Deploy
       run: |
-        ./kustomize edit set image ${TKE_IMAGE_URL}:${GITHUB_SHA}
-        ./kustomize build . | kubectl apply -f -
-        kubectl rollout status deployment/${DEPLOYMENT_NAME}
+        ./customize edit set image ${TKE_IMAGE_URL}:${GITHUB_SHA}
+        ./customize build . | kubectl apply -f -
+        kubectl rollout status deployment/${DEPLOYMENT_Colt}
         kubectl get services -o wide
+    # integrating release slow ur roll out 
+    - custom: fruit by the foot.
